@@ -1,0 +1,85 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   SaveCommand.java
+
+package Commands;
+
+import MainFiles.Main;
+import flat.*;
+import java.io.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+// Referenced classes of package Commands:
+//            Command
+
+public class SaveCommand extends Command
+{
+
+    public SaveCommand()
+    {
+    }
+
+    public void execute(Object o)
+    {
+        JSONArray toFileArray = new JSONArray();
+        for(Iterator iterator = Main.flats.entrySet().iterator(); iterator.hasNext();)
+        {
+            JSONObject toJsonArrayObj = new JSONObject();
+            java.util.Map.Entry pair = (java.util.Map.Entry)iterator.next();
+            Flat valueFromPair = (Flat)pair.getValue();
+            ZonedDateTime dateTime = valueFromPair.getCreationDate();
+            try
+            {
+                toJsonArrayObj.put("key", pair.getKey());
+                toJsonArrayObj.put("name", valueFromPair.getName());
+                toJsonArrayObj.put("id", valueFromPair.getId());
+                toJsonArrayObj.put("coordinate_x", valueFromPair.getCoordinates().getX());
+                toJsonArrayObj.put("coordinate_y", valueFromPair.getCoordinates().getY());
+                toJsonArrayObj.put("area", valueFromPair.getArea());
+                toJsonArrayObj.put("number_of_rooms", valueFromPair.getNumberOfRooms());
+                toJsonArrayObj.put("furnish", valueFromPair.getFurnish().toString());
+                toJsonArrayObj.put("new_or_not", valueFromPair.getNewOrNot());
+                toJsonArrayObj.put("transport", valueFromPair.getTransport().toString());
+                toJsonArrayObj.put("house_name", valueFromPair.getHouse().getName());
+                toJsonArrayObj.put("house_year", valueFromPair.getHouse().getYear());
+                toJsonArrayObj.put("house_number_of_floors", valueFromPair.getHouse().getNumberOfFloors());
+                toJsonArrayObj.put("year", Integer.valueOf(dateTime.getYear()));
+                toJsonArrayObj.put("month", Integer.valueOf(dateTime.getMonthValue()));
+                toJsonArrayObj.put("day", Integer.valueOf(dateTime.getDayOfMonth()));
+                toJsonArrayObj.put("hour", Integer.valueOf(dateTime.getHour()));
+                toJsonArrayObj.put("minute", Integer.valueOf(dateTime.getMinute()));
+                toJsonArrayObj.put("second", Integer.valueOf(dateTime.getSecond()));
+                toJsonArrayObj.put("nano", Integer.valueOf(dateTime.getNano()));
+                toJsonArrayObj.put("zone", dateTime.getZone().toString());
+                toFileArray.add(toJsonArrayObj);
+            }
+            catch(Exception var11)
+            {
+                System.out.println("\u041A\u0430\u043A\u043E\u0435-\u0442\u043E \u043F\u043E\u043B\u0435 \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043E");
+            }
+        }
+
+        try
+        {
+            File finalFile = new File("MainData.json");
+            FileWriter writer = new FileWriter(finalFile);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.write((new StringBuilder()).append("{\"FLATS\":").append(toFileArray.toJSONString()).append(" }").toString());
+            bufferedWriter.close();
+            System.out.println("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043E");
+        }
+        catch(FileNotFoundException var12)
+        {
+            System.out.println("File not found!");
+        }
+        catch(IOException var13)
+        {
+            var13.printStackTrace();
+        }
+    }
+}

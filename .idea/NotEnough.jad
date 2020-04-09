@@ -1,0 +1,28 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   NotEnough.java
+
+package Commands;
+
+import java.io.PrintStream;
+
+public class NotEnough
+{
+
+    public NotEnough()
+    {
+    }
+
+    public static boolean checkParametrs(String strings[], int a)
+    {
+        if(strings.length != a)
+        {
+            System.out.println((new StringBuilder()).append("\u041D\u0435\u0432\u0435\u0440\u043D\u043E\u0435 \u0447\u0438\u0441\u043B\u043E \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u043E\u0432. \u041D\u0443\u0436\u043D\u043E ").append(a).toString());
+            return false;
+        } else
+        {
+            return true;
+        }
+    }
+}

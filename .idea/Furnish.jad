@@ -1,0 +1,93 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Furnish.java
+
+package flat;
+
+
+public final class Furnish extends Enum
+{
+
+    public static Furnish[] values()
+    {
+        return (Furnish[])$VALUES.clone();
+    }
+
+    public static Furnish valueOf(String name)
+    {
+        return (Furnish)Enum.valueOf(flat/Furnish, name);
+    }
+
+    private Furnish(String s, int i)
+    {
+        super(s, i);
+    }
+
+    public static boolean contains(String furnish)
+    {
+        if(furnish != null && !furnish.equals(""))
+        {
+            furnish = furnish.toUpperCase();
+            return furnish.equals("NONE") || furnish.equals("FINE") || furnish.equals("LITTLE");
+        } else
+        {
+            return false;
+        }
+    }
+
+    public static Furnish getByName(String furnish)
+    {
+        furnish = furnish.toUpperCase();
+        byte var2 = -1;
+        switch(furnish.hashCode())
+        {
+        case -1986416409: 
+            if(furnish.equals("NORMAL"))
+                var2 = 2;
+            break;
+
+        case 2158010: 
+            if(furnish.equals("FINE"))
+                var2 = 1;
+            break;
+
+        case 2402104: 
+            if(furnish.equals("NONE"))
+                var2 = 0;
+            break;
+        }
+        switch(var2)
+        {
+        case 0: // '\0'
+            return NONE;
+
+        case 1: // '\001'
+            return FINE;
+
+        case 2: // '\002'
+            return LITTLE;
+        }
+        return null;
+    }
+
+    public static String furnishToString()
+    {
+        return "NONE, FINE, LITTLE";
+    }
+
+    public static final Furnish NONE;
+    public static final Furnish FINE;
+    public static final Furnish LITTLE;
+    private static final Furnish $VALUES[];
+
+    static 
+    {
+        NONE = new Furnish("NONE", 0);
+        FINE = new Furnish("FINE", 1);
+        LITTLE = new Furnish("LITTLE", 2);
+        $VALUES = (new Furnish[] {
+            NONE, FINE, LITTLE
+        });
+    }
+}

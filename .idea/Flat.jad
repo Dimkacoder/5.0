@@ -1,0 +1,255 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Flat.java
+
+package flat;
+
+import MainFiles.Main;
+import java.io.PrintStream;
+import java.time.ZonedDateTime;
+import java.util.*;
+
+// Referenced classes of package flat:
+//            Coordinates, House, Furnish, Transport
+
+public class Flat
+    implements Comparable
+{
+
+    public Flat(String name, Coordinates coordinates, ZonedDateTime creationDate, Integer area, Long numberOfRooms, Boolean newOrNot, Furnish furnish, 
+            Transport transport, House house)
+    {
+        this.coordinates = new Coordinates();
+        this.house = new House();
+        Random random = new Random();
+        Long id;
+        boolean AllRight;
+        do
+        {
+            id = Long.valueOf(Math.abs(random.nextLong()));
+            AllRight = IsIdOk(id);
+        } while(!AllRight);
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.area = area;
+        this.numberOfRooms = numberOfRooms;
+        this.newOrNot = newOrNot;
+        this.furnish = furnish;
+        this.transport = transport;
+        this.house = house;
+    }
+
+    public Flat(Long id, String name, Coordinates coordinates, ZonedDateTime creationDate, Integer area, Long numberOfRooms, Boolean newOrNot, 
+            Furnish furnish, Transport transport, House house)
+    {
+        this.coordinates = new Coordinates();
+        this.house = new House();
+        boolean AllRight = IsIdOk(id);
+        if(!AllRight)
+        {
+            System.out.println("Id \u043D\u0435\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u0435\u043D. \u041F\u043E\u0434\u0431\u0438\u0440\u0430\u044E \u0434\u0440\u0443\u0433\u043E\u0439 id");
+            for(; !AllRight; AllRight = IsIdOk(id))
+            {
+                Random random = new Random();
+                id = Long.valueOf(Math.abs(random.nextLong()));
+            }
+
+        }
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.area = area;
+        this.numberOfRooms = numberOfRooms;
+        this.newOrNot = newOrNot;
+        this.furnish = furnish;
+        this.transport = transport;
+        this.house = house;
+    }
+
+    public Flat()
+    {
+        coordinates = new Coordinates();
+        house = new House();
+        Random random = new Random();
+        Long id;
+        boolean AllRight;
+        do
+        {
+            id = Long.valueOf(Math.abs(random.nextLong()));
+            AllRight = IsIdOk(id);
+        } while(!AllRight);
+        this.id = id;
+        creationDate = ZonedDateTime.now();
+    }
+
+    private boolean IsIdOk(Long id)
+    {
+        for(Iterator iterator = Main.flats.entrySet().iterator(); iterator.hasNext();)
+        {
+            java.util.Map.Entry pair = (java.util.Map.Entry)iterator.next();
+            Flat value = (Flat)pair.getValue();
+            if(value.getId().equals(id))
+                return false;
+        }
+
+        return true;
+    }
+
+    public void setCoordinates(Float x, Float y)
+    {
+        coordinates.setX(x);
+        coordinates.setY(y);
+    }
+
+    public void setArea(Integer area)
+    {
+        this.area = area;
+    }
+
+    public void setNumberOfRooms(Long numberOfRooms)
+    {
+        this.numberOfRooms = numberOfRooms;
+    }
+
+    public void setNewOrNot(Boolean newOrNot)
+    {
+        this.newOrNot = newOrNot;
+    }
+
+    public void setFurnish(String condition)
+    {
+        furnish = Furnish.getByName(condition);
+    }
+
+    public void setTransport(String condition)
+    {
+        transport = Transport.getByName(condition);
+    }
+
+    public void setHouse(String name, Long year, Long numberOfFloors)
+    {
+        house.setName(name);
+        house.setYear(year);
+        house.setNumberOfFloors(numberOfFloors);
+    }
+
+    public boolean setName(String name)
+    {
+        if(name != null && !name.equals(""))
+        {
+            this.name = name;
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public Coordinates getCoordinates()
+    {
+        return coordinates;
+    }
+
+    public ZonedDateTime getCreationDate()
+    {
+        return creationDate;
+    }
+
+    public Integer getArea()
+    {
+        return area;
+    }
+
+    public Long getNumberOfRooms()
+    {
+        return numberOfRooms;
+    }
+
+    public Boolean getNewOrNot()
+    {
+        return newOrNot;
+    }
+
+    public Furnish getFurnish()
+    {
+        return furnish;
+    }
+
+    public Transport getTransport()
+    {
+        return transport;
+    }
+
+    public House getHouse()
+    {
+        return house;
+    }
+
+    public int compareTo(Flat o)
+    {
+        int what_return = name.compareTo(o.name);
+        if(what_return != 0)
+            return what_return;
+        what_return = creationDate.compareTo(o.creationDate);
+        if(what_return != 0)
+            return what_return;
+        what_return = coordinates.compareTo(o.coordinates);
+        if(what_return != 0)
+            return what_return;
+        what_return = area.compareTo(o.area);
+        if(what_return != 0)
+            return what_return;
+        what_return = numberOfRooms.compareTo(o.numberOfRooms);
+        if(what_return != 0)
+            return what_return;
+        what_return = newOrNot.compareTo(o.newOrNot);
+        if(what_return != 0)
+            return what_return;
+        what_return = furnish.compareTo(o.furnish);
+        if(what_return != 0)
+            return what_return;
+        what_return = transport.compareTo(o.transport);
+        if(what_return != 0)
+            return what_return;
+        what_return = house.compareTo(o.house);
+        if(what_return != 0)
+            return what_return;
+        else
+            return 0;
+    }
+
+    public String toString()
+    {
+        return (new StringBuilder()).append("Flat \u2116").append(id).append("\n\t Name : ").append(name).append("\n\t Coordinates : ").append(coordinates).append("\n\t Date : ").append(creationDate).append("\n\t Area : ").append(area).append("\n\t Number of rooms : ").append(numberOfRooms).append("\n\t New or not : ").append(newOrNot).append("\n\t Furnish : ").append(furnish).append("\n\t Transport : ").append(transport).append("\n\t House : ").append(house).append("\n").toString();
+    }
+
+    public volatile int compareTo(Object obj)
+    {
+        return compareTo((Flat)obj);
+    }
+
+    private Long id;
+    private String name;
+    private Coordinates coordinates;
+    private ZonedDateTime creationDate;
+    private Integer area;
+    private Long numberOfRooms;
+    private Boolean newOrNot;
+    private Furnish furnish;
+    private Transport transport;
+    private House house;
+}

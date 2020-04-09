@@ -1,0 +1,477 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   CreateFlat.java
+
+package Commands;
+
+import MainFiles.Console;
+import flat.Flat;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+// Referenced classes of package Commands:
+//            NotEnough
+
+public class CreateFlat
+{
+
+    CreateFlat()
+    {
+        scanner = Console.sc;
+        newFlat = new Flat();
+    }
+
+    public Flat getNewFlat()
+    {
+        for(boolean iter = false; !iter; iter = newName())
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430");
+
+        for(boolean iter = false; !iter; iter = newCoordinate())
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u044B \u0434\u043E\u043C\u0430(x \u0438 y)");
+
+        for(boolean iter = false; !iter; iter = newArea())
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043F\u043B\u043E\u0449\u0430\u0434\u044C");
+
+        for(boolean iter = false; !iter; iter = newNumbersOfRooms())
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043A\u043E\u043C\u043D\u0430\u0442");
+
+        for(boolean iter = false; !iter; iter = newNewOrNot())
+            System.out.println("\u0412\u0430\u0448 \u0434\u043E\u043C \u043D\u043E\u0432\u044B\u0439 \u0438\u043B\u0438 \u0441\u0442\u0430\u0440\u044B\u0439?");
+
+        for(boolean iter = false; !iter; iter = newTransport())
+            System.out.println("\u041A\u0430\u043A\u043E\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u0430?");
+
+        for(boolean iter = false; !iter; iter = newFurnish())
+            System.out.println("\u041A\u0430\u043A\u0430\u044F \u043C\u0435\u0431\u0435\u043B\u044C?");
+
+        for(boolean iter = false; !iter; iter = newHouse())
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0434\u043E\u043C\u0430, \u0433\u043E\u0434 \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0438 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u044D\u0442\u0430\u0436\u0435\u0439 (\u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u043F\u044F\u0442\u0443\u044E+\u043F\u0440\u043E\u0431\u0435\u043B)");
+
+        return newFlat;
+    }
+
+    private boolean newHouse()
+    {
+        String strings[] = scanner.nextLine().split(" ");
+        try
+        {
+            if(!NotEnough.checkParametrs(strings, 3))
+                throw new NumberFormatException();
+            String houseName = strings[0];
+            Long houseYear = Long.valueOf(Long.parseLong(strings[1]));
+            Long numberOfFloors = Long.valueOf(Long.parseLong(strings[2]));
+            if(houseName.trim().length() == 0 || houseYear.longValue() <= 0L || houseYear.longValue() > 155L || numberOfFloors.longValue() <= 0L)
+                throw new NumberFormatException();
+            newFlat.setHouse(houseName, houseYear, numberOfFloors);
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435(\u0432 \u043E\u0434\u043D\u043E \u0441\u043B\u043E\u0432\u043E) \u0438 \u0434\u0432\u0430 \u043F\u043E\u043B\u043E\u0436\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u0447\u0438\u0441\u043B\u0430. \u041F\u0435\u0440\u0432\u043E\u0435 \u0447\u0438\u0441\u043B\u043E \u0434\u043E 155");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean newFurnish()
+    {
+        String strings[] = scanner.nextLine().split(" ");
+        if(!NotEnough.checkParametrs(strings, 1))
+            return false;
+        String condition = "";
+        String s = strings[0];
+        byte byte0 = -1;
+        switch(s.hashCode())
+        {
+        case 33393113: 
+            if(s.equals("\u043D\u0435\u0442\u0443"))
+                byte0 = 0;
+            break;
+
+        case 32439801: 
+            if(s.equals("\u041D\u0435\u0442\u0443"))
+                byte0 = 1;
+            break;
+
+        case 1077162: 
+            if(s.equals("\u043D\u0435\u0442"))
+                byte0 = 2;
+            break;
+
+        case 1046410: 
+            if(s.equals("\u041D\u0435\u0442"))
+                byte0 = 3;
+            break;
+
+        case 33392908: 
+            if(s.equals("\u043D\u0435\u043C\u0430"))
+                byte0 = 4;
+            break;
+
+        case 32439596: 
+            if(s.equals("\u041D\u0435\u043C\u0430"))
+                byte0 = 5;
+            break;
+
+        case 104855740: 
+            if(s.equals("\u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0430\u044F"))
+                byte0 = 6;
+            break;
+
+        case 2108823708: 
+            if(s.equals("\u041C\u0430\u043B\u0435\u043D\u044C\u043A\u0430\u044F"))
+                byte0 = 7;
+            break;
+
+        case -1186681200: 
+            if(s.equals("\u0425\u043E\u0440\u043E\u0448\u0430\u044F"))
+                byte0 = 8;
+            break;
+
+        case 1443632816: 
+            if(s.equals("\u0445\u043E\u0440\u043E\u0448\u0430\u044F"))
+                byte0 = 9;
+            break;
+
+        case 2091333323: 
+            if(s.equals("\u043F\u043E\u0439\u0434\u0451\u0442"))
+                byte0 = 10;
+            break;
+
+        case 1175200491: 
+            if(s.equals("\u041F\u043E\u0439\u0434\u0451\u0442"))
+                byte0 = 11;
+            break;
+        }
+        switch(byte0)
+        {
+        case 0: // '\0'
+        case 1: // '\001'
+        case 2: // '\002'
+        case 3: // '\003'
+        case 4: // '\004'
+        case 5: // '\005'
+            condition = "NONE";
+            break;
+
+        case 6: // '\006'
+        case 7: // '\007'
+            condition = "LITTLE";
+            break;
+
+        case 8: // '\b'
+        case 9: // '\t'
+        case 10: // '\n'
+        case 11: // '\013'
+            condition = "FINE";
+            break;
+
+        default:
+            System.out.println("\u0425\u043E\u0440\u043E\u0448\u0430\u044F, \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0430\u044F \u0438\u043B\u0438 \u043D\u0435\u0442\u0443?");
+            return false;
+        }
+        newFlat.setFurnish(condition);
+        return true;
+    }
+
+    private boolean newTransport()
+    {
+        String strings[] = scanner.nextLine().split(" ");
+        if(!NotEnough.checkParametrs(strings, 1))
+            return false;
+        String condition = "";
+        String s = strings[0];
+        byte byte0 = -1;
+        switch(s.hashCode())
+        {
+        case 33393113: 
+            if(s.equals("\u043D\u0435\u0442\u0443"))
+                byte0 = 0;
+            break;
+
+        case 32439801: 
+            if(s.equals("\u041D\u0435\u0442\u0443"))
+                byte0 = 1;
+            break;
+
+        case 1077162: 
+            if(s.equals("\u043D\u0435\u0442"))
+                byte0 = 2;
+            break;
+
+        case 1046410: 
+            if(s.equals("\u041D\u0435\u0442"))
+                byte0 = 3;
+            break;
+
+        case 33392908: 
+            if(s.equals("\u043D\u0435\u043C\u0430"))
+                byte0 = 4;
+            break;
+
+        case 32439596: 
+            if(s.equals("\u041D\u0435\u043C\u0430"))
+                byte0 = 5;
+            break;
+
+        case 33358295: 
+            if(s.equals("\u043C\u0430\u043B\u043E"))
+                byte0 = 6;
+            break;
+
+        case 32404983: 
+            if(s.equals("\u041C\u0430\u043B\u043E"))
+                byte0 = 7;
+            break;
+
+        case -681396911: 
+            if(s.equals("\u043C\u0430\u043B\u043E\u0432\u0430\u0442\u043E"))
+                byte0 = 8;
+            break;
+
+        case -616752783: 
+            if(s.equals("\u041C\u0430\u043B\u043E\u0432\u0430\u0442\u043E"))
+                byte0 = 9;
+            break;
+
+        case -1170091449: 
+            if(s.equals("\u0414\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E"))
+                byte0 = 10;
+            break;
+
+        case 1131410983: 
+            if(s.equals("\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E"))
+                byte0 = 11;
+            break;
+
+        case -647590850: 
+            if(s.equals("\u0425\u0432\u0430\u0442\u0430\u0442\u0435\u0442"))
+                byte0 = 12;
+            break;
+
+        case 1085402910: 
+            if(s.equals("\u0445\u0432\u0430\u0442\u0430\u0435\u0442"))
+                byte0 = 13;
+            break;
+
+        case 1552370117: 
+            if(s.equals("\u043D\u043E\u0440\u043C\u0430\u043B\u044C\u043D\u043E"))
+                byte0 = 14;
+            break;
+
+        case -738629211: 
+            if(s.equals("\u041D\u043E\u0440\u043C\u0430\u043B\u044C\u043D\u043E"))
+                byte0 = 15;
+            break;
+
+        case -1361493385: 
+            if(s.equals("\u043D\u043E\u0440\u043C\u0443\u043B\u044C"))
+                byte0 = 16;
+            break;
+
+        case 303159895: 
+            if(s.equals("\u041D\u043E\u0440\u043C\u0443\u043B\u044C"))
+                byte0 = 17;
+            break;
+        }
+        switch(byte0)
+        {
+        case 0: // '\0'
+        case 1: // '\001'
+        case 2: // '\002'
+        case 3: // '\003'
+        case 4: // '\004'
+        case 5: // '\005'
+            condition = "NONE";
+            break;
+
+        case 6: // '\006'
+        case 7: // '\007'
+        case 8: // '\b'
+        case 9: // '\t'
+            condition = "FEW";
+            break;
+
+        case 10: // '\n'
+        case 11: // '\013'
+        case 12: // '\f'
+        case 13: // '\r'
+            condition = "ENOUGH";
+            break;
+
+        case 14: // '\016'
+        case 15: // '\017'
+        case 16: // '\020'
+        case 17: // '\021'
+            condition = "NORMAL";
+            break;
+
+        default:
+            System.out.println("\u0414\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E, \u043D\u043E\u0440\u043C\u0430\u043B\u044C\u043D\u043E, \u043C\u0430\u043B\u043E \u0438\u043B\u0438 \u043D\u0435\u0442?");
+            return false;
+        }
+        newFlat.setTransport(condition);
+        return true;
+    }
+
+    private boolean newCoordinate()
+    {
+        String strings[] = scanner.nextLine().split(" ");
+        if(!NotEnough.checkParametrs(strings, 2))
+            return false;
+        Float x;
+        Float y;
+        try
+        {
+            x = Float.valueOf(Float.parseFloat(strings[0]));
+            y = Float.valueOf(Float.parseFloat(strings[1]));
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0447\u0438\u0441\u043B\u043E!");
+            return false;
+        }
+        newFlat.setCoordinates(x, y);
+        return true;
+    }
+
+    private boolean newArea()
+    {
+        String strings[] = scanner.nextLine().split(" ");
+        if(!NotEnough.checkParametrs(strings, 1))
+            return false;
+        Integer area;
+        try
+        {
+            area = Integer.valueOf(Integer.parseInt(strings[0]));
+            if(area.intValue() <= 0)
+                throw new NumberFormatException();
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043F\u043E\u043B\u043E\u0436\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0435 \u0446\u0435\u043B\u043E\u0435 \u0447\u0438\u0441\u043B\u043E!");
+            return false;
+        }
+        newFlat.setArea(area);
+        return true;
+    }
+
+    private boolean newNumbersOfRooms()
+    {
+        String strings[] = scanner.nextLine().split(" ");
+        if(!NotEnough.checkParametrs(strings, 1))
+            return false;
+        Long number;
+        try
+        {
+            number = Long.valueOf(Long.parseLong(strings[0]));
+            if(number.longValue() <= 0L || number.longValue() > 10L)
+                throw new NumberFormatException();
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043F\u043E\u043B\u043E\u0436\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0435 \u0446\u0435\u043B\u043E\u0435 \u0447\u0438\u0441\u043B\u043E \u0434\u043E 10-\u0442\u0438!");
+            return false;
+        }
+        newFlat.setNumberOfRooms(number);
+        return true;
+    }
+
+    private boolean newNewOrNot()
+    {
+        String strings[] = scanner.nextLine().split(" ");
+        if(!NotEnough.checkParametrs(strings, 1))
+            return false;
+        String s = strings[0];
+        byte byte0 = -1;
+        switch(s.hashCode())
+        {
+        case 108960: 
+            if(s.equals("new"))
+                byte0 = 0;
+            break;
+
+        case 78208: 
+            if(s.equals("New"))
+                byte0 = 1;
+            break;
+
+        case 110119: 
+            if(s.equals("old"))
+                byte0 = 2;
+            break;
+
+        case 79367: 
+            if(s.equals("Old"))
+                byte0 = 3;
+            break;
+
+        case 1235896095: 
+            if(s.equals("\u0421\u0442\u0430\u0440\u044B\u0439"))
+                byte0 = 4;
+            break;
+
+        case -2142938369: 
+            if(s.equals("\u0441\u0442\u0430\u0440\u044B\u0439"))
+                byte0 = 5;
+            break;
+
+        case 1005887903: 
+            if(s.equals("\u041D\u043E\u0432\u044B\u0439"))
+                byte0 = 6;
+            break;
+
+        case 1035440575: 
+            if(s.equals("\u043D\u043E\u0432\u044B\u0439"))
+                byte0 = 7;
+            break;
+        }
+        switch(byte0)
+        {
+        case 0: // '\0'
+        case 1: // '\001'
+        case 2: // '\002'
+        case 3: // '\003'
+            System.out.println("\u041F\u043E-\u0440\u0443\u0437\u0441\u043A\u0438");
+            return false;
+
+        case 4: // '\004'
+        case 5: // '\005'
+            newFlat.setNewOrNot(Boolean.valueOf(false));
+            break;
+
+        case 6: // '\006'
+        case 7: // '\007'
+            newFlat.setNewOrNot(Boolean.valueOf(true));
+            break;
+
+        default:
+            System.out.println("\u0421\u0442\u0430\u0440\u044B\u0439 \u0438\u043B\u0438 \u043D\u043E\u0432\u044B\u0439?(\u043E\u0434\u043D\u043E \u0441\u043B\u043E\u0432\u043E)");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean newName()
+    {
+        String Name = scanner.nextLine();
+        if(Name.trim().length() == 0)
+        {
+            System.out.println("\u0412\u044B \u043D\u0435 \u043D\u0430\u0437\u0432\u0430\u043B\u0438(\u043F\u0443\u0441\u0442\u0430\u044F \u0441\u0442\u0440\u043E\u043A\u0430)");
+            return false;
+        }
+        String words[] = Name.split(" ");
+        if(words.length > 1)
+        {
+            System.out.println("\u041D\u0430\u0437\u043E\u0432\u0438\u0442\u0435 \u043E\u0434\u043D\u0438\u043C \u0441\u043B\u043E\u0432\u043E\u043C, \u043F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430");
+            return false;
+        } else
+        {
+            newFlat.setName(Name);
+            return true;
+        }
+    }
+
+    Scanner scanner;
+    private Flat newFlat;
+}

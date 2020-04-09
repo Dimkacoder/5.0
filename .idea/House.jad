@@ -1,0 +1,82 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   House.java
+
+package flat;
+
+
+public class House
+    implements Comparable
+{
+
+    public House()
+    {
+    }
+
+    public House(String name, Long year, Long numberOfFloors)
+    {
+        this.name = name;
+        this.year = year;
+        this.numberOfFloors = numberOfFloors;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public Long getYear()
+    {
+        return year;
+    }
+
+    public Long getNumberOfFloors()
+    {
+        return numberOfFloors;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setYear(Long year)
+    {
+        this.year = year;
+    }
+
+    public void setNumberOfFloors(Long numberOfFloors)
+    {
+        this.numberOfFloors = numberOfFloors;
+    }
+
+    public String toString()
+    {
+        return (new StringBuilder()).append("House {\n\t\t name : ").append(name).append("\n\t\t year : ").append(year).append("\n\t\t numberOfFloors : ").append(numberOfFloors).append("\n\t }").toString();
+    }
+
+    public int compareTo(House o)
+    {
+        int what_return = name.compareTo(o.name);
+        if(what_return != 0)
+            return what_return;
+        what_return = year.compareTo(o.year);
+        if(what_return != 0)
+            return what_return;
+        what_return = numberOfFloors.compareTo(o.numberOfFloors);
+        if(what_return != 0)
+            return what_return;
+        else
+            return 0;
+    }
+
+    public volatile int compareTo(Object obj)
+    {
+        return compareTo((House)obj);
+    }
+
+    private String name;
+    private Long year;
+    private Long numberOfFloors;
+}

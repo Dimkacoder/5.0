@@ -1,0 +1,42 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   MaxTrasportCommand.java
+
+package Commands;
+
+import MainFiles.Main;
+import flat.Flat;
+import flat.Transport;
+import java.io.PrintStream;
+import java.util.*;
+
+// Referenced classes of package Commands:
+//            Command
+
+public class MaxTrasportCommand extends Command
+{
+
+    public MaxTrasportCommand()
+    {
+    }
+
+    public void execute(Object var1)
+    {
+        Transport transport = Transport.NONE;
+        Flat maxTransp = new Flat();
+        Iterator iterator = Main.flats.entrySet().iterator();
+        do
+        {
+            if(!iterator.hasNext())
+                break;
+            java.util.Map.Entry pair = (java.util.Map.Entry)iterator.next();
+            if(transport.compareTo(((Flat)pair.getValue()).getTransport()) < 0)
+            {
+                transport = ((Flat)pair.getValue()).getTransport();
+                maxTransp = (Flat)pair.getValue();
+            }
+        } while(true);
+        System.out.println(maxTransp);
+    }
+}

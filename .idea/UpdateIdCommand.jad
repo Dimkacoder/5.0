@@ -1,0 +1,63 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   UpdateIdCommand.java
+
+package Commands;
+
+import MainFiles.Console;
+import MainFiles.Main;
+import flat.Flat;
+import java.io.PrintStream;
+import java.util.*;
+
+// Referenced classes of package Commands:
+//            Command, JsonDecoder, CreateFlat
+
+public class UpdateIdCommand extends Command
+{
+
+    public UpdateIdCommand()
+    {
+    }
+
+    public void execute(Object var1)
+    {
+        Long id = (Long)var1;
+        for(Iterator iterator = Main.flats.entrySet().iterator(); iterator.hasNext();)
+        {
+            java.util.Map.Entry pair = (java.util.Map.Entry)iterator.next();
+            if(((Flat)pair.getValue()).getId().equals(id))
+            {
+                Integer key = (Integer)pair.getKey();
+                try
+                {
+                    Flat newFlat = newFlat();
+                    Main.flats.put(key, newFlat);
+                }
+                catch(NullPointerException e)
+                {
+                    System.out.println("\u041A\u0430\u043A\u043E\u0435-\u0442\u043E \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u043F\u0443\u0441\u0442\u043E\u0435");
+                    return;
+                }
+                System.out.println("\u0417\u0430\u043C\u0435\u043D\u0435\u043D\u043E");
+                return;
+            }
+        }
+
+        System.out.println("\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E");
+    }
+
+    private Flat newFlat()
+    {
+        if(Console.splitCommand.length == 3)
+        {
+            JsonDecoder jsonDecoder = new JsonDecoder(Console.splitCommand[2]);
+            return jsonDecoder.getDecodeValue();
+        } else
+        {
+            CreateFlat createFlat = new CreateFlat();
+            return createFlat.getNewFlat();
+        }
+    }
+}

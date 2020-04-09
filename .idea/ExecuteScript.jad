@@ -1,0 +1,38 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   ExecuteScript.java
+
+package Commands;
+
+import MainFiles.Console;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+// Referenced classes of package Commands:
+//            Command
+
+public class ExecuteScript extends Command
+{
+
+    public ExecuteScript()
+    {
+    }
+
+    public void execute(Object var1)
+    {
+        String filename = (String)var1;
+        try
+        {
+            Console console = new Console(filename);
+            for(; Console.sc.hasNextLine(); console.writeCommand());
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("\u0424\u0430\u0439\u043B \u0441\u043A\u0440\u0438\u043F\u0442\u0430 \u0441 \u0442\u0430\u043A\u0438\u043C \u0438\u043C\u0435\u043D\u0435\u043C \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D");
+            return;
+        }
+        System.out.println((new StringBuilder()).append("\u0421\u043A\u0440\u0438\u043F\u0442 \u0432 \u0444\u0430\u0439\u043B\u0435 ").append(filename).append(" \u0438\u0441\u043F\u043E\u043B\u043D\u0435\u043D").toString());
+    }
+}

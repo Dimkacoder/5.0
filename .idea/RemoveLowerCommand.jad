@@ -1,0 +1,68 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   RemoveLowerCommand.java
+
+package Commands;
+
+import MainFiles.Console;
+import MainFiles.Main;
+import flat.Flat;
+import java.io.PrintStream;
+import java.util.*;
+
+// Referenced classes of package Commands:
+//            Command, JsonDecoder, CreateFlat
+
+public class RemoveLowerCommand extends Command
+{
+
+    public RemoveLowerCommand()
+    {
+    }
+
+    public void execute(Object var1)
+    {
+        Flat thisFlat = newFlat();
+        if(thisFlat == null)
+        {
+            System.out.println("\u041A\u0430\u043A\u043E\u0435-\u0442\u043E \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u043F\u0443\u0441\u0442\u043E\u0435");
+            return;
+        }
+        Iterator iterator = Main.flats.entrySet().iterator();
+        ArrayList keys = new ArrayList();
+        do
+        {
+            if(!iterator.hasNext())
+                break;
+            java.util.Map.Entry pair = (java.util.Map.Entry)iterator.next();
+            if(thisFlat.compareTo((Flat)pair.getValue()) > 0)
+                keys.add(pair.getKey());
+        } while(true);
+        if(keys.size() == 0)
+        {
+            System.out.println("\u041D\u0435 \u043D\u0430\u0448\u043B\u043E\u0441\u044C \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u043C\u0435\u043D\u044C\u0448\u0438\u0445");
+            return;
+        }
+        for(int i = 0; i < keys.size(); i++)
+        {
+            Integer key = (Integer)keys.get(i);
+            Main.flats.remove(key);
+        }
+
+        System.out.println((new StringBuilder()).append("\u0423\u0434\u0430\u043B\u0435\u043D\u043E ").append(keys.size()).append(" \u044D\u043B\u0435\u043C\u0435\u043D\u0442(\u043E\u0432)").toString());
+    }
+
+    private Flat newFlat()
+    {
+        if(Console.splitCommand.length == 2)
+        {
+            JsonDecoder jsonDecoder = new JsonDecoder(Console.splitCommand[1]);
+            return jsonDecoder.getDecodeValueWithoutId();
+        } else
+        {
+            CreateFlat createFlat = new CreateFlat();
+            return createFlat.getNewFlat();
+        }
+    }
+}

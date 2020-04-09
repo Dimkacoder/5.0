@@ -1,0 +1,127 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   JsonDecoder.java
+
+package Commands;
+
+import flat.*;
+import java.io.PrintStream;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+public class JsonDecoder
+{
+
+    JsonDecoder(String jsonFlat)
+    {
+        try
+        {
+            JSONParser parser = new JSONParser();
+            this.jsonFlat = (JSONObject)parser.parse(jsonFlat);
+        }
+        catch(ParseException e)
+        {
+            System.out.println("\u0427\u0442\u043E-\u0442\u043E \u043D\u0435 \u0442\u0430\u043A \u0441 json \u0441\u0442\u0440\u043E\u043A\u043E\u0439");
+        }
+        catch(ClassCastException e)
+        {
+            System.out.println("\u041D\u0435 \u0438\u0437\u0434\u0435\u0432\u0430\u0439\u0442\u0435\u0441\u044C \u043D\u0430\u0434 \u0441\u0442\u0440\u043E\u043A\u043E\u0439");
+        }
+    }
+
+    public Integer getDecodeKey()
+    {
+        decodeKey = getInteger("key");
+        return decodeKey;
+    }
+
+    public Flat getDecodeValue()
+    {
+        Long id = getLong("id");
+        String nameFlat = getString("name");
+        Float x = getFloat("coordinate_x");
+        Float y = getFloat("coordinate_y");
+        Coordinates coordinates = new Coordinates(x, y);
+        Integer area = getInteger("area");
+        Long number_of_rooms = getLong("number_of_rooms");
+        Furnish furnish = Furnish.getByName(getString("furnish"));
+        Boolean new_or_not = getBoolean("new_or_not");
+        Transport transport = Transport.getByName(getString("transport"));
+        String house_name = getString("house_name");
+        Long house_year = getLong("house_year");
+        Long house_number_of_floors = getLong("house_number_of_floors");
+        House house = new House(house_name, house_year, house_number_of_floors);
+        Integer year = getInteger("year");
+        Integer month = getInteger("month");
+        Integer day = getInteger("day");
+        Integer hour = getInteger("hour");
+        Integer minute = getInteger("minute");
+        Integer second = getInteger("second");
+        Integer nano = getInteger("nano");
+        ZoneId zoneId = ZoneId.of(getString("zone"));
+        ZonedDateTime creationDate = ZonedDateTime.of(year.intValue(), month.intValue(), day.intValue(), hour.intValue(), minute.intValue(), second.intValue(), nano.intValue(), zoneId);
+        decodeValue = new Flat(id, nameFlat, coordinates, creationDate, area, number_of_rooms, new_or_not, furnish, transport, house);
+        return decodeValue;
+    }
+
+    public Flat getDecodeValueWithoutId()
+    {
+        String nameFlat = getString("name");
+        Float x = getFloat("coordinate_x");
+        Float y = getFloat("coordinate_y");
+        Coordinates coordinates = new Coordinates(x, y);
+        Integer area = getInteger("area");
+        Long number_of_rooms = getLong("number_of_rooms");
+        Furnish furnish = Furnish.getByName(getString("furnish"));
+        Boolean new_or_not = getBoolean("new_or_not");
+        Transport transport = Transport.getByName(getString("transport"));
+        String house_name = getString("house_name");
+        Long house_year = getLong("house_year");
+        Long house_number_of_floors = getLong("house_number_of_floors");
+        House house = new House(house_name, house_year, house_number_of_floors);
+        Integer year = getInteger("year");
+        Integer month = getInteger("month");
+        Integer day = getInteger("day");
+        Integer hour = getInteger("hour");
+        Integer minute = getInteger("minute");
+        Integer second = getInteger("second");
+        Integer nano = getInteger("nano");
+        ZoneId zoneId = ZoneId.of(getString("zone"));
+        ZonedDateTime creationDate = ZonedDateTime.of(year.intValue(), month.intValue(), day.intValue(), hour.intValue(), minute.intValue(), second.intValue(), nano.intValue(), zoneId);
+        decodeValue = new Flat(nameFlat, coordinates, creationDate, area, number_of_rooms, new_or_not, furnish, transport, house);
+        return decodeValue;
+    }
+
+    private String getString(String key)
+    {
+        return (String)jsonFlat.get(key);
+    }
+
+    private Long getLong(String key)
+    {
+        return Long.valueOf(Long.parseLong(jsonFlat.get(key).toString()));
+    }
+
+    private Boolean getBoolean(String key)
+    {
+        return (Boolean)jsonFlat.get(key);
+    }
+
+    private Float getFloat(String key)
+    {
+        return Float.valueOf(Float.parseFloat(jsonFlat.get(key).toString()));
+    }
+
+    private Integer getInteger(String key)
+    {
+        return Integer.valueOf(Integer.parseInt(jsonFlat.get(key).toString()));
+    }
+
+    private JSONObject jsonFlat;
+    private Flat decodeValue;
+    private Integer decodeKey;
+}

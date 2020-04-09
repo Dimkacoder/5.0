@@ -1,0 +1,103 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Transport.java
+
+package flat;
+
+
+public final class Transport extends Enum
+{
+
+    public static Transport[] values()
+    {
+        return (Transport[])$VALUES.clone();
+    }
+
+    public static Transport valueOf(String name)
+    {
+        return (Transport)Enum.valueOf(flat/Transport, name);
+    }
+
+    private Transport(String s, int i)
+    {
+        super(s, i);
+    }
+
+    public static boolean contains(String transport)
+    {
+        if(transport != null && !transport.equals(""))
+        {
+            transport = transport.toUpperCase();
+            return transport.equals("FEW") || transport.equals("NONE") || transport.equals("NORMAL") || transport.equals("ENOUGH");
+        } else
+        {
+            return false;
+        }
+    }
+
+    public static Transport getByName(String transport)
+    {
+        transport = transport.toUpperCase();
+        byte var2 = -1;
+        switch(transport.hashCode())
+        {
+        case -1986416409: 
+            if(transport.equals("NORMAL"))
+                var2 = 2;
+            break;
+
+        case 69496: 
+            if(transport.equals("FEW"))
+                var2 = 0;
+            break;
+
+        case 2402104: 
+            if(transport.equals("NONE"))
+                var2 = 1;
+            break;
+
+        case 2049883504: 
+            if(transport.equals("ENOUGH"))
+                var2 = 3;
+            break;
+        }
+        switch(var2)
+        {
+        case 0: // '\0'
+            return FEW;
+
+        case 1: // '\001'
+            return NONE;
+
+        case 2: // '\002'
+            return NORMAL;
+
+        case 3: // '\003'
+            return ENOUGH;
+        }
+        return null;
+    }
+
+    public static String transportToString()
+    {
+        return "FEW, NONE, NORMAL, ENOUGH";
+    }
+
+    public static final Transport NONE;
+    public static final Transport FEW;
+    public static final Transport NORMAL;
+    public static final Transport ENOUGH;
+    private static final Transport $VALUES[];
+
+    static 
+    {
+        NONE = new Transport("NONE", 0);
+        FEW = new Transport("FEW", 1);
+        NORMAL = new Transport("NORMAL", 2);
+        ENOUGH = new Transport("ENOUGH", 3);
+        $VALUES = (new Transport[] {
+            NONE, FEW, NORMAL, ENOUGH
+        });
+    }
+}
